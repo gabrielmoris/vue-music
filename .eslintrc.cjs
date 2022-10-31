@@ -20,4 +20,9 @@ module.exports = {
   env: {
     node: true,
   },
+  //How to disable rules from vue
+  rules: {
+    "vue/multi-word-component-names": "off",
+    "vue/no-reserved-component-names": "off",
+  },
 };
