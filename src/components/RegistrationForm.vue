@@ -106,6 +106,10 @@
 </template>
 
 <script>
+import { auth, usersCollection } from "@/includes/firebase";
+import { mapWritableState } from "pinia";
+import useUserStore from "@/stores/user";
+
 export default {
   name: "RegisterForm",
   data() {
@@ -128,15 +132,48 @@ export default {
       reg_alert_msg: "Please wait! Your account is being created.",
     };
   },
+  computed: {
+    ...mapWritableState(useUserStore, ["userLoggedIn"]),
+  },
   methods: {
-    register(values) {
+    async register(values) {
       this.reg_show_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = "bg-blue-500";
       this.reg_alert_msg = "Please wait! Your account is being created.";
+      let userCred = null;
+      try {
+        userCred = await auth.createUserWithEmailAndPassword(
+          values.email,
+          values.password
+        );
+      } catch (e) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = "bg-red-500";
+        this.reg_alert_msg =
+          "An unexpected error ocurred. Please try again later.";
+        return;
+      }
+      try {
+        await usersCollection.add({
+          name: values.name,
+          email: values.email,
+          age: values.age,
+          country: values.country,
+        });
+      } catch (e) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = "bg-red-500";
+        this.reg_alert_msg =
+          "An unexpected error ocurred. Please try again later.";
+        return;
+      }
+
+      this.userLoggedIn = true;
+
       this.reg_alert_variant = "bg-green-500";
       this.reg_alert_msg = "Success! Your account has ben created.";
-      console.log(values);
+      console.log(userCred, this.userLoggedIn);
     },
   },
 };
