@@ -24,6 +24,7 @@
               :updateSong="updateSong"
               :index="i"
               :removeSong="removeSong"
+              :updateUnsavedFlag="updateUnsavedFlag"
             />
           </div>
         </div>
@@ -43,6 +44,7 @@ export default {
   data() {
     return {
       songs: [],
+      unsavedFlag: false,
     };
   },
   async created() {
@@ -67,6 +69,20 @@ export default {
       };
       this.songs.push(song);
     },
+    updateUnsavedFlag(value) {
+      this.unsavedFlag = value;
+    },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (!this.unsavedFlag) {
+      next();
+    } else {
+      // eslint-disable-next-line no-unused-vars
+      const leave = confirm(
+        "You have unsaved changes. Are you sure you want to leave?"
+      );
+      next(leave);
+    }
   },
   //3 options, in each route, in the component or here.
   //   beforeRouteEnter(to, from, next) {
