@@ -52,16 +52,56 @@ export default {
   data() {
     return {
       songs: [],
+      maxPerPage: 10,
+      pendingRequest: false,
     };
   },
   async created() {
-    const snapshots = await songsCollection.get();
-    snapshots.forEach((document) => {
-      this.songs.push({
-        docID: document.id,
-        ...document.data(),
+    this.getSongs();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      const { scrollTop, offsetHeight } = document.documentElement;
+      const { innerHeight } = window;
+      const bottomOfWindow =
+        Math.round(scrollTop) + innerHeight === offsetHeight;
+      if (bottomOfWindow) {
+        this.getSongs();
+      }
+    },
+    async getSongs() {
+      if (this.pendingRequest) {
+        return;
+      }
+      this.pendingRequest = true;
+      let snapshots;
+      if (this.songs.length) {
+        const lastDocument = await songsCollection
+          .doc(this.songs[this.songs.length - 1].docID)
+          .get();
+        snapshots = await songsCollection
+          .orderBy("modified_name")
+          .startAfter(lastDocument)
+          .limit(this.maxPerPage)
+          .get();
+      } else {
+        snapshots = await songsCollection
+          .orderBy("modified_name")
+          .limit(this.maxPerPage)
+          .get();
+      }
+      snapshots.forEach((document) => {
+        this.songs.push({
+          docID: document.id,
+          ...document.data(),
+        });
       });
-    });
+      this.pendingRequest = false;
+    },
   },
 };
 </script>
