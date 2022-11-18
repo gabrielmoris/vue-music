@@ -25,7 +25,7 @@
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
-        <span class="card-title">Comments (15)</span>
+        <span class="card-title">Comments ({{ song.comment_count }})</span>
         <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
       </div>
       <div class="p-6">
@@ -58,86 +58,30 @@
         </vee-form>
         <!-- Sort Comments -->
         <select
+          v-model="sort"
           class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         >
-          <option value="1">Latest</option>
-          <option value="2">Oldest</option>
+          <option value="l">Latest</option>
+          <option value="o">Oldest</option>
         </select>
       </div>
     </div>
   </section>
   <!-- Comments -->
   <ul class="container mx-auto">
-    <li class="p-6 bg-gray-50 border border-gray-200">
+    <li
+      v-for="comment in sortedComments"
+      :key="comment.docID"
+      class="p-6 bg-gray-50 border border-gray-200"
+    >
       <!-- Comment Author -->
       <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
+        <div class="font-bold">{{ comment.name }}</div>
+        <time>{{ comment.datePosted }}</time>
       </div>
 
       <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
-      </p>
-    </li>
-    <li class="p-6 bg-gray-50 border border-gray-200">
-      <!-- Comment Author -->
-      <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
-      </div>
-
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
-      </p>
-    </li>
-    <li class="p-6 bg-gray-50 border border-gray-200">
-      <!-- Comment Author -->
-      <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
-      </div>
-
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
-      </p>
-    </li>
-    <li class="p-6 bg-gray-50 border border-gray-200">
-      <!-- Comment Author -->
-      <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
-      </div>
-
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
-      </p>
-    </li>
-    <li class="p-6 bg-gray-50 border border-gray-200">
-      <!-- Comment Author -->
-      <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
-      </div>
-
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
-      </p>
-    </li>
-    <li class="p-6 bg-gray-50 border border-gray-200">
-      <!-- Comment Author -->
-      <div class="mb-5">
-        <div class="font-bold">Elaine Dreyfuss</div>
-        <time>5 mins ago</time>
-      </div>
-
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium der doloremque laudantium.
+        {{ comment.content }}
       </p>
     </li>
   </ul>
@@ -160,16 +104,34 @@ export default {
       comment_show_alert: false,
       comment_alert_variant: "bg-blue-500",
       comment_alert_message: "Please wait! Your comment is being submitted",
+      comments: [],
+      sort: "l",
     };
   },
-  computed: { ...mapState(useUserStore, ["userLoggedIn"]) },
+  computed: {
+    ...mapState(useUserStore, ["userLoggedIn"]),
+    sortedComments() {
+      //Slice will create a new array and will solve the prolem of ESLint that doesn't allow me to change the array of data
+      return this.comments.slice().sort((a, b) => {
+        if (this.sort === "l") {
+          return new Date(b.datePosted) - new Date(a.datePosted);
+        }
+        return new Date(a.datePosted) - new Date(b.datePosted);
+      });
+    },
+  },
   async created() {
     const docSnapshot = await songsCollection.doc(this.$route.params.id).get();
     if (!docSnapshot.exists) {
       this.$router.push({ name: "home" });
       return;
     }
+    // in watcher I save in query the sorted comments, here I check the sort
+    const { sort } = this.$route.query;
+    this.sort = sort === "l" || sort === "o" ? sort : "l";
+
     this.song = docSnapshot.data();
+    this.getComments();
   },
   methods: {
     async addComment(values, { resetForm }) {
@@ -185,12 +147,46 @@ export default {
         name: auth.currentUser.displayName,
         uid: auth.currentUser.uid,
       };
+
       await commentsCollection.add(comment);
+
+      this.song.comment_count += 1;
+      await songsCollection
+        .doc(this.$route.params.id)
+        .update({ comment_count: this.song.comment_count });
+      this.getComments();
 
       this.comment_in_submission = false;
       this.comment_alert_variant = "bg-green-500";
       this.comment_alert_message = "Comment added sucessfully!";
       resetForm();
+    },
+    async getComments() {
+      const snapshots = await commentsCollection
+        .where("sid", "==", this.$route.params.id)
+        .get();
+      this.comments = [];
+
+      snapshots.forEach((doc) => {
+        this.comments.push({
+          docID: doc.id,
+          ...doc.data(),
+        });
+      });
+    },
+  },
+  watch: {
+    sort(newVal) {
+      //each time the sort data changes I put the change in a query so I can check
+      //it in created() hook
+      if (newVal === this.$route.query.sort) {
+        return;
+      }
+      this.$router.push({
+        query: {
+          sort: newVal,
+        },
+      });
     },
   },
 };
