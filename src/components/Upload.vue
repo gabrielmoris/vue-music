@@ -60,7 +60,10 @@ export default {
         ? [...$event.dataTransfer.files]
         : [...$event.target.files];
       files.forEach((file) => {
-        if (file.type.substring(0, 5) !== "audio") {
+        if (
+          file.type.substring(0, 5) !== "audio" ||
+          file.type === "audio/mid"
+        ) {
           return;
         }
 
