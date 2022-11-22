@@ -1,5 +1,4 @@
 <template>
-  <!-- Main Content -->
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
@@ -39,7 +38,7 @@ import CompositionItem from "@/components/CompositionItem.vue";
 import { songsCollection, auth } from "@/includes/firebase";
 // import useUserStore from "@/stores/user";
 export default {
-  name: "manage",
+  name: "Manage",
   components: { AppUpload, CompositionItem },
   data() {
     return {

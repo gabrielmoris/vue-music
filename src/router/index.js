@@ -17,7 +17,7 @@ const routes = [
     component: About,
   },
   {
-    name: "manage",
+    name: "Manage",
     //Other solution for the redirect
     // alias: "/manage",
     path: "/manage-music",
@@ -30,10 +30,10 @@ const routes = [
       requiresAuth: true,
     },
   },
-  {
-    path: "/manage",
-    redirect: { name: "manage" },
-  },
+  // {
+  //   path: "/manage",
+  //   redirect: { name: "Manage" },
+  // },
   { name: "song", path: "/song/:id", component: Song },
   {
     path: "/:catchAll(.*)*",
