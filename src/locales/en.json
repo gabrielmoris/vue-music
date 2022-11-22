@@ -1,0 +1,66 @@
+{
+  "header": {
+    "icon": "Music",
+    "links": {
+      "about": "About",
+      "manage": "Manage",
+      "logout": "Logout",
+      "login": "Login / Register"
+    }
+  },
+  "home": {
+    "listen": "Listen to Great Music!",
+    "paragraph": "Listen to nice free music played and composed by people like you!",
+    "songs": "Songs"
+  },
+  "auth": {
+    "your_account": "Your Account",
+    "login_tab": "Login",
+    "register_tab": "Register"
+  },
+  "song": {
+    "comment_count": "No comments | 1 comment | {count} comments"
+  },
+  "register": {
+    "name": "Name",
+    "name_placeholder": "Enter Name",
+    "email": "Email",
+    "age": "Age",
+    "password": "Password",
+    "password_placeholder": "Enter Password",
+    "confirm_password": "Confirm Password",
+    "confirm_pasword_placeholder": "Confirm Password",
+    "country": "Country",
+    "usa": "U.S.A",
+    "mexico": "Mexico",
+    "germany": "Germany",
+    "antarctica": "Antarctica",
+    "accept": "I accept Music's {0}",
+    "tos": "Terms of Service",
+    "button_submit": "Submit"
+  },
+  "login": {
+    "email_placeholder": "Enter Email",
+    "password": "Password",
+    "password_placeholder": "Enter Password",
+    "submit": "Submit"
+  },
+  "manage": {
+    "my_songs": "My Songs"
+  },
+  "edit_song_component": {
+    "song_title": "Song Title",
+    "song_title_placeholder": "Enter Song Title",
+    "genre": "Genre",
+    "genre_placeholder": "Enter Genre",
+    "submit_button": "Submit",
+    "go_back_button": "Go Back"
+  },
+  "upload": {
+    "upload": "Upload",
+    "drop_files": "Drop your files here"
+  },
+  "about": {
+    "text": "This is an about page"
+  }
+}

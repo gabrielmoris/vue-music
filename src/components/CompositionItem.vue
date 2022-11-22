@@ -29,23 +29,27 @@
         @submit="edit"
       >
         <div class="mb-3">
-          <label class="inline-block mb-2">Song Title</label>
+          <label class="inline-block mb-2">{{
+            $t("edit_song_component.song_title")
+          }}</label>
           <vee-field
             type="text"
             name="modified_name"
             class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-            placeholder="Enter Song Title"
+            :placeholder="$t('edit_song_component.song_title_placeholder')"
             @input="updateUnsavedFlag(true)"
           />
           <ErrorMessage class="text-red-600" name="modified_name" />
         </div>
         <div class="mb-3">
-          <label class="inline-block mb-2">Genre</label>
+          <label class="inline-block mb-2">{{
+            $t("edit_song_component.genre")
+          }}</label>
           <vee-field
             type="text"
             name="genre"
             class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-            placeholder="Enter Genre"
+            :placeholder="$t('edit_song_component.genre_placeholder')"
             @input="updateUnsavedFlag(true)"
           />
           <ErrorMessage class="text-red-600" name="genre" />
@@ -55,7 +59,7 @@
           class="py-1.5 px-3 rounded text-white bg-green-600"
           :disabled="in_submission"
         >
-          Submit
+          {{ $t("edit_song_component.submit_button") }}
         </button>
         <button
           type="button"
@@ -63,7 +67,7 @@
           :disabled="in_submission"
           @click.prevent="showForm = false"
         >
-          Go Back
+          {{ $t("edit_song_component.go_back_button") }}
         </button>
       </vee-form>
     </div>

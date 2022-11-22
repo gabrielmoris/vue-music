@@ -1,7 +1,7 @@
 <template>
   <div class="about p-20 text-3xl">
     <h1 v-icon-secondary="{ icon: 'headphones-alt', right: true }">
-      This is an about page
+      {{ $t("about.text") }}
     </h1>
   </div>
 </template>
