@@ -29,6 +29,7 @@
     "name": "Name",
     "name_placeholder": "Enter Name",
     "email": "Email",
+    "email_placeholder": "Enter Email",
     "age": "Age",
     "password": "Password",
     "password_placeholder": "Enter Password",

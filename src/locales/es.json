@@ -1,5 +1,71 @@
 {
+  "header": {
+    "icon": "Música",
+    "links": {
+      "about": "Acerca de mi",
+      "manage": "Administrar",
+      "logout": "Cerrar Sesión",
+      "login": "Iniciar Sesión / Registrarse"
+    }
+  },
   "home": {
-    "listen": "Escucha Buena Música!"
+    "listen": "Escucha Buena Música!",
+    "paragraph": "Escucha música compuesta e interpretada por gente como tú!",
+    "songs": "Música"
+  },
+  "auth": {
+    "your_account": "Tu Cuenta",
+    "login_tab": "Iniciar Sesión",
+    "register_tab": "Registrarse"
+  },
+  "song": {
+    "comment_count": "Sin Comentarios | 1 comentario | {count} comentarios",
+    "comment_placeholder": "Escribe tu comentario...",
+    "button_submit": "Enviar",
+    "latest": "Más Nuevo",
+    "oldest": "Más Antiguo"
+  },
+  "register": {
+    "name": "Nombre",
+    "name_placeholder": "Escribe tu Nombre",
+    "email": "Email",
+    "email_placeholder": "Escribe tu Email",
+    "age": "Edad",
+    "password": "Contraseña",
+    "password_placeholder": "Escribe tu Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "confirm_pasword_placeholder": "Confirma tu Contraseña",
+    "country": "País",
+    "usa": "E.E.U.U",
+    "mexico": "Mexico",
+    "germany": "Alemania",
+    "antarctica": "Antártica",
+    "accept": "Acepto los {0}",
+    "tos": "Términoss y condiciones del Servicio",
+    "button_submit": "Enviar"
+  },
+  "login": {
+    "email_placeholder": "Escribe tu Email",
+    "password": "Contraseña",
+    "password_placeholder": "Escribe tu Contraseña",
+    "submit": "Enviar"
+  },
+  "manage": {
+    "my_songs": "Mi Música"
+  },
+  "edit_song_component": {
+    "song_title": "Título",
+    "song_title_placeholder": "Escribe el nuevo Título",
+    "genre": "Género",
+    "genre_placeholder": "Escribe el nuevo Género",
+    "submit_button": "Enviar",
+    "go_back_button": "Volver"
+  },
+  "upload": {
+    "upload": "Subir",
+    "drop_files": "Arrastra tu música aquí"
+  },
+  "about": {
+    "text": "Eres responsable de lo que subes. Tú verás."
   }
 }
