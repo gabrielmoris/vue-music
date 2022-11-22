@@ -19,7 +19,11 @@
     "register_tab": "Register"
   },
   "song": {
-    "comment_count": "No comments | 1 comment | {count} comments"
+    "comment_count": "No comments | 1 comment | {count} comments",
+    "comment_placeholder": "Your comment here...",
+    "button_submit": "Submit",
+    "latest": "Latest",
+    "oldest": "Oldest"
   },
   "register": {
     "name": "Name",

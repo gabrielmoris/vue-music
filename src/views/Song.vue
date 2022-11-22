@@ -58,7 +58,7 @@
               as="textarea"
               name="comment"
               class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded mb-4"
-              placeholder="Your comment here..."
+              :placeholder="$t('song.comment_placeholder')"
             ></vee-field>
             <ErrorMessage class="text-red-600" name="comment" />
             <button
@@ -66,7 +66,7 @@
               type="submit"
               class="py-1.5 px-3 rounded text-white bg-green-600 block"
             >
-              Submit
+              {{ $t("song.button_submit") }}
             </button>
           </vee-form>
           <!-- Sort Comments -->
@@ -74,8 +74,8 @@
             v-model="sort"
             class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
           >
-            <option value="l">Latest</option>
-            <option value="o">Oldest</option>
+            <option value="l">{{ $t("song.latest") }}</option>
+            <option value="o">{{ $t("song.oldest") }}</option>
           </select>
         </div>
       </div>
