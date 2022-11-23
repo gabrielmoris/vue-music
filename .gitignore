@@ -30,3 +30,4 @@ coverage
 
 /template
 .env
+stats.html
