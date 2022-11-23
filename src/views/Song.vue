@@ -136,18 +136,35 @@ export default {
       });
     },
   },
-  async created() {
-    const docSnapshot = await songsCollection.doc(this.$route.params.id).get();
-    if (!docSnapshot.exists) {
-      this.$router.push({ name: "home" });
-      return;
-    }
-    // in watcher I save in query the sorted comments, here I check the sort
-    const { sort } = this.$route.query;
-    this.sort = sort === "l" || sort === "o" ? sort : "l";
+  //This is changed for beforeRouteEnter to improve performance perception
+  // async created() {
+  //   const docSnapshot = await songsCollection.doc(this.$route.params.id).get();
+  //   if (!docSnapshot.exists) {
+  //     this.$router.push({ name: "home" });
+  //     return;
+  //   }
+  //   // in watcher I save in query the sorted comments, here I check the sort
+  //   const { sort } = this.$route.query;
+  //   this.sort = sort === "l" || sort === "o" ? sort : "l";
 
-    this.song = docSnapshot.data();
-    this.getComments();
+  //   this.song = docSnapshot.data();
+  //   this.getComments();
+  // },
+  async beforeRouteEnter(to, from, next) {
+    const docSnapshot = await songsCollection.doc(to.params.id).get();
+
+    next((vm) => {
+      if (!docSnapshot.exists) {
+        vm.$router.push({ name: "home" });
+        return;
+      }
+      // in watcher I save in query the sorted comments, here I check the sort
+      const { sort } = vm.$route.query;
+      vm.sort = sort === "l" || sort === "o" ? sort : "l";
+
+      vm.song = docSnapshot.data();
+      vm.getComments();
+    });
   },
   methods: {
     ...mapActions(usePlayerStore, ["newSong"]),
