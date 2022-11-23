@@ -3,6 +3,7 @@
     <h1 v-icon-secondary="{ icon: 'headphones-alt', right: true }">
       {{ $t("about.text") }}
     </h1>
+    <BaseButton />
   </div>
 </template>
 
