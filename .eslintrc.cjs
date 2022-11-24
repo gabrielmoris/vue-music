@@ -13,6 +13,7 @@ module.exports = {
       files: ["cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}"],
       extends: ["plugin:cypress/recommended"],
     },
+    //This is to dont need to import the test functions
     {
       files: ["src/components/__tests__/**.spec.js"],
       globals: {

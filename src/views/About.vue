@@ -1,7 +1,8 @@
 <template>
   <div class="about p-20 text-3xl">
     <h1 v-icon-secondary="{ icon: 'headphones-alt', right: true }">
-      {{ $t("about.text") }}
+      <!-- {{ $t("about.text") }} -->
+      About
     </h1>
     <BaseButton />
   </div>
