@@ -8,6 +8,8 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  //This is to dont need to import the functions of the test. It needs also Eslint
+  test: { globals: true },
   plugins: [
     vue(),
     //Only to check the bundle size
