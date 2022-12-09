@@ -20,8 +20,8 @@ describe("Home.vue", () => {
     const items = component.findAllComponents(SongItem);
     expect(items).toHaveLength(songs.length);
 
-    //   items.forEach((wrapper, i) => {
-    //     expect(wrapper.props().song).toStrictEqual(songs[i]);
-    //   });
+    items.forEach((wrapper, i) => {
+      expect(wrapper.props().song).toStrictEqual(songs[i]);
+    });
   });
 });
